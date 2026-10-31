@@ -12,11 +12,11 @@ import lombok.*;
 @Builder
 public class CadastroUsuarioRequestDto {
 
-    @NotBlank
-    @Email
+    @NotBlank(message = "O e-mail é obrigatório")
+    @Email(message = "Informe um e-mail válido")
     private String email;
 
-    @NotBlank
-    @Size(min = 8)
+    @NotBlank(message = "A senha é obrigatória")
+    @Size(min = 8,message = "A senha deve ter no mínimo 8 caracteres")
     private String senha;
 }
