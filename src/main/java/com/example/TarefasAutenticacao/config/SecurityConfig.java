@@ -28,6 +28,7 @@ public class SecurityConfig {
           return httpSecurity
                   // desativar o csrf
                   .csrf(csrf -> csrf.disable())
+                  // para não criar nem guardar um sessão,vai se identificar com o JWT
                   .sessionManagement(sm ->sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                   // para liberar as rotas
                   .authorizeHttpRequests(req ->{
@@ -39,5 +40,4 @@ public class SecurityConfig {
                   })
                   .build();
     }
-
 }
