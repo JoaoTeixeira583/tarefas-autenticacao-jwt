@@ -1,6 +1,8 @@
 package com.example.TarefasAutenticacao.controller;
 
 import com.example.TarefasAutenticacao.dto.CadastroUsuarioRequestDto;
+import com.example.TarefasAutenticacao.dto.LoginRequestDto;
+import com.example.TarefasAutenticacao.dto.LoginResponseDto;
 import com.example.TarefasAutenticacao.dto.UsuarioResponseDto;
 import com.example.TarefasAutenticacao.service.UsuarioService;
 import jakarta.validation.Valid;
@@ -26,4 +28,10 @@ public class AuthController {
         return ResponseEntity.status(HttpStatus.CREATED).body(cadastradoUsuario);
     }
 
+    @PostMapping("/login")
+    public ResponseEntity<LoginResponseDto> loginUsuario(@RequestBody @Valid LoginRequestDto loginRequestDto){
+        LoginResponseDto loginUsuario = usuarioService.login(loginRequestDto);
+
+        return ResponseEntity.ok(loginUsuario);
+    }
 }

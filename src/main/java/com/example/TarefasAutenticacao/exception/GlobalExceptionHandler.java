@@ -65,4 +65,17 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(erroResponseDto);
     }
 
+    // exceção para tratar credenciais erradas
+    @ExceptionHandler
+    public ResponseEntity<ErroResponseDto> tratarCredenciaisInvalidas(CredenciaisInvalidasException ex){
+
+        ErroResponseDto erroResponseDto = ErroResponseDto.builder()
+                .status(HttpStatus.UNAUTHORIZED.value())
+                .mensagem(ex.getMessage())
+                .dataHora(LocalDateTime.now())
+                .build();
+
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(erroResponseDto);
+    }
+
 }
