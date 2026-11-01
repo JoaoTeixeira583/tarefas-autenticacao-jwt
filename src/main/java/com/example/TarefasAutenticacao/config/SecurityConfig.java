@@ -9,6 +9,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 public class SecurityConfig {
@@ -24,12 +25,14 @@ public class SecurityConfig {
     // defina o acesso ás rotas
     // HttpSecurity fronece para você para definir a regras de acesso
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity){
+    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity,JwtAuthenticationFilter jwtAuthenticationFilter){
           return httpSecurity
                   // desativar o csrf
                   .csrf(csrf -> csrf.disable())
                   // para não criar nem guardar um sessão,vai se identificar com o JWT
                   .sessionManagement(sm ->sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                  // registrar na cadeia
+                  .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                   // para liberar as rotas
                   .authorizeHttpRequests(req ->{
                       req.requestMatchers(HttpMethod.POST,"/auth/cadastro").permitAll();
