@@ -37,6 +37,8 @@ public class SecurityConfig {
                   .authorizeHttpRequests(req ->{
                       req.requestMatchers(HttpMethod.POST,"/auth/cadastro").permitAll();
                       req.requestMatchers(HttpMethod.POST,"/auth/login").permitAll();
+                      // para permitir que o admin pod entrar em todas as rotas de admin
+                      req.requestMatchers("/admin/**").hasRole("ADMIN");
 
                       // exige autenticação para as outras rotas que não estão acimas
                       req.anyRequest().authenticated();
